@@ -1,38 +1,73 @@
-// // Array of image filenames inside the 'assets/' folder
-// const imageList = ["about.jpg", "aboutDP.jpg", "AnirudhBeach.jpg", "AnirudhBench.jpg", "Avatar1.jpg", "bb black.jpg", "bb.jpg" ,"bb1.jpg" ,"bb1_cpy.jpg", "bb2.jpg", "bb2_cpy.jpg", "bb3.jpg", "bb4.jpg", "bb5.jpg", "bb6.jpg", "bb7.jpg", "bb8.jpg", "bb9.jpg", "Black_Court.jpg", "BlackBoardSide.jpg", "BLackFullCourt.jpg", "DP.jpg", "DP1.jpg", "dp3.jpg", "Profile Pic.jpg" 
-//   ];
-  
-//   const gallery = document.getElementById("gallery");
-  
-//   imageList.forEach(image => {
-//     const img = document.createElement("img");
-//     img.src = `assets/${image}`;
-//     img.alt = image;
-//     gallery.appendChild(img);
-//   });
-  
-// Load local images
-const imageList = ["about.jpg", "aboutDP.jpg", "AnirudhBeach.jpg", "AnirudhBench.jpg", "Avatar1.jpg", "bb black.jpg", "bb.jpg" ,"bb1.jpg" ,"bb1_cpy.jpg", "bb2.jpg", "bb2_cpy.jpg", "bb3.jpg", "bb4.jpg", "bb5.jpg", "bb6.jpg", "bb7.jpg", "bb8.jpg", "bb9.jpg", "Black_Court.jpg", "BlackBoardSide.jpg", "BLackFullCourt.jpg", "DP.jpg", "DP1.jpg", "dp3.jpg", "Profile Pic.jpg" 
-  ];
-  
- const gallery = document.getElementById("gallery");
+// Load local images and videos
+const mediaList = [
+  { image: "about.jpg" },
+  { image: "aboutDP.jpg", video: "aboutDP.mp4" },
+  { image: "AnirudhBeach.jpg", video: "AnirudhBeach.mp4" },
+  { image: "AnirudhBench.jpg", video: "bbvideo.mp4" },
+  { image: "Avatar1.jpg" },
+  { image: "bb black.jpg" },
+  { image: ["bb.jpg", "bb1.jpg", "bb1_cpy.jpg", "bb2.jpg", "bb2_cpy.jpg", "bb3.jpg", "bb4.jpg", "bb5.jpg", "bb6.jpg", "bb7.jpg", "bb8.jpg", "bb9.jpg"] },
+  { image: "Black_Court.jpg" },
+  { image: ["BlackBoardSide.jpg", "BLackFullCourt.jpg", "DP.jpg", "DP1.jpg", "dp3.jpg", "Profile Pic.jpg"] },
+];
 
-imageList.forEach(image => {
-  const img = document.createElement("img");
-  img.src = `assets/${image}`;
-  img.alt = image;
+const gallery = document.getElementById("gallery");
 
-  // Wait for image to fully load before showing
-  img.onload = () => {
-    img.classList.add("loaded");
-  };
+mediaList.forEach(media => {
+  const images = Array.isArray(media.image) ? media.image : [media.image];
 
-  gallery.appendChild(img);
+  images.forEach(imageSrc => {
+    const container = document.createElement("div");
+    container.className = "gallery-item";
+
+    const img = document.createElement("img");
+    img.src = `assets/${imageSrc}`;
+    img.alt = imageSrc;
+
+    img.onload = () => {
+      img.classList.add("loaded");
+    };
+
+    container.appendChild(img);
+
+    // Only add video if there's one image and a video specified
+    if (media.video && !Array.isArray(media.image)) {
+      const video = document.createElement("video");
+      video.src = `assets/${media.video}`;
+      video.muted = true;
+      video.loop = true;
+      video.playsInline = true;
+
+      container.addEventListener("mouseenter", () => {
+        video.play();
+      });
+
+      container.addEventListener("mouseleave", () => {
+        video.pause();
+        video.currentTime = 0;
+      });
+
+      container.appendChild(video);
+      container.classList.add("has-video");
+    }
+
+    gallery.appendChild(container);
+  });
 });
-  
-  const toggleBtn = document.getElementById("toggleMode");
 
-  // Set initial icon based on current theme
+const toggleBtn = document.getElementById("toggleMode");
+
+if (document.body.classList.contains("dark-mode")) {
+  toggleBtn.textContent = "☀️";
+  toggleBtn.title = "Switch to Light Mode";
+} else {
+  toggleBtn.textContent = "🌙";
+  toggleBtn.title = "Switch to Dark Mode";
+}
+
+toggleBtn.addEventListener("click", () => {
+  document.body.classList.toggle("dark-mode");
+
   if (document.body.classList.contains("dark-mode")) {
     toggleBtn.textContent = "☀️";
     toggleBtn.title = "Switch to Light Mode";
@@ -40,17 +75,4 @@ imageList.forEach(image => {
     toggleBtn.textContent = "🌙";
     toggleBtn.title = "Switch to Dark Mode";
   }
-  
-  toggleBtn.addEventListener("click", () => {
-    document.body.classList.toggle("dark-mode");
-  
-    // Update icon and tooltip
-    if (document.body.classList.contains("dark-mode")) {
-      toggleBtn.textContent = "☀️";
-      toggleBtn.title = "Switch to Light Mode";
-    } else {
-      toggleBtn.textContent = "🌙";
-      toggleBtn.title = "Switch to Dark Mode";
-    }
-  });
-    
+});
