@@ -26,15 +26,7 @@ class ImageGallery {
       { image: "DP.jpg" },
       { image: "DP1.jpg" },
       { image: "dp3.jpg" },
-      { image: "Profile Pic.jpg" },
-      { image: "ss.jpg" },
-      { image: "ss1.jpg" },
-      { image: "ss3.jpg" },
-      { image: "ss4.jpg" },
-      { image: "ss5.jpg" },
-      { image: "ss6.jpg" },
-      { image: "ss7.jpg" },
-      { image: "ss8.jpg" }
+      { image: "Profile Pic.jpg" }
     ];
     
     this.gallery = document.getElementById("gallery");
