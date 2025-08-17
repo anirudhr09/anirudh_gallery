@@ -22,6 +22,33 @@ header {
   transition: color 0.3s ease;
 }
 
+.subtitle {
+  font-size: 1.2rem;
+  color: #666;
+  margin: 0.5rem 0 0 0;
+  font-weight: 300;
+  transition: color 0.3s ease;
+}
+
+body.dark-mode .subtitle {
+  color: #aaa;
+}
+
+footer {
+  text-align: center;
+  margin-top: 3rem;
+  padding: 1rem 0;
+  border-top: 1px solid #e0e0e0;
+  color: #666;
+  font-size: 0.9rem;
+  transition: color 0.3s ease, border-color 0.3s ease;
+}
+
+body.dark-mode footer {
+  color: #aaa;
+  border-color: #333;
+}
+
 #toggleMode {
   position: fixed;
   top: 1rem;
@@ -39,6 +66,11 @@ header {
   z-index: 1000;
 }
 
+#toggleMode:hover {
+  background: #ff4040;
+  transform: scale(1.05);
+}
+
 /* Masonry layout */
 .masonry {
   columns: 4 200px;
@@ -46,20 +78,19 @@ header {
 }
 
 .masonry img {
-width: 100%;
-margin-bottom: 1rem;
-border-radius: 10px;
-display: block;
-opacity: 0;
-transform: scale(0.95);
-transition: opacity 0.6s ease, transform 0.4s ease;
+  width: 100%;
+  margin-bottom: 1rem;
+  border-radius: 10px;
+  display: block;
+  opacity: 0;
+  transform: scale(0.95);
+  transition: opacity 0.6s ease, transform 0.4s ease;
 }
 
 .masonry img.loaded {
-opacity: 1;
-transform: scale(1);
+  opacity: 1;
+  transform: scale(1);
 }
-
 
 /* Dark mode */
 body.dark-mode {
@@ -73,7 +104,7 @@ body.dark-mode .modern-title {
 
 body.dark-mode #toggleMode {
   background: #444;
-  color: #ffd700; /* golden sun in dark mode */
+  color: #ffd700;
 }
 
 .masonry .gallery-item {
@@ -84,6 +115,7 @@ body.dark-mode #toggleMode {
   border-radius: 10px;
   overflow: hidden;
 }
+
 .gallery-item {
   position: relative;
   width: 100%;
@@ -118,5 +150,211 @@ body.dark-mode #toggleMode {
 
 .gallery-item.has-video:hover img {
   opacity: 0;
+}
+
+/* Lightbox modal */
+#lightboxModal {
+  position: fixed;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  top: 0;
+  left: 0;
+  z-index: 1001;
+  width: 100vw;
+  height: 100vh;
+  background-color: rgba(0, 0, 0, 0.9);
+  transition: opacity 0.3s ease;
+}
+
+#lightboxModal .modal-content {
+  position: relative;
+  max-width: 90%;
+  max-height: 90%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+#lightboxModal .modal-img {
+  width: 100%;
+  height: auto;
+  border-radius: 10px;
+  box-shadow: 0 2px 20px rgba(0, 0, 0, 0.5);
+  max-height: 80vh;
+  object-fit: contain;
+}
+
+#lightboxModal .close {
+  position: absolute;
+  top: -15px;
+  right: -15px;
+  background-color: white;
+  color: black;
+  border: none;
+  border-radius: 50%;
+  padding: 0.5rem 0.8rem;
+  font-size: 1.5rem;
+  cursor: pointer;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.4);
+  transition: background 0.3s ease;
+  z-index: 10;
+}
+
+#lightboxModal .close:hover {
+  background-color: #f0f0f0;
+}
+
+/* Navigation buttons */
+.nav-btn {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  background: rgba(255, 255, 255, 0.9);
+  color: #333;
+  border: none;
+  border-radius: 50%;
+  width: 50px;
+  height: 50px;
+  font-size: 1.2rem;
+  cursor: pointer;
+  transition: background 0.3s ease, opacity 0.3s ease;
+  z-index: 10;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.nav-btn:hover {
+  background: rgba(255, 255, 255, 1);
+  transform: translateY(-50%) scale(1.1);
+}
+
+.nav-btn:disabled {
+  opacity: 0.3;
+  cursor: not-allowed;
+  transform: translateY(-50%) scale(1);
+}
+
+.nav-btn.prev {
+  left: -25px;
+}
+
+.nav-btn.next {
+  right: -25px;
+}
+
+/* Hide navigation buttons when there's only one image */
+.nav-btn.hidden {
+  display: none;
+}
+
+/* Image counter */
+.image-counter {
+  position: absolute;
+  bottom: -30px;
+  left: 50%;
+  transform: translateX(-50%);
+  background: rgba(0, 0, 0, 0.7);
+  color: white;
+  padding: 5px 15px;
+  border-radius: 15px;
+  font-size: 0.9rem;
+  font-weight: 500;
+}
+
+/* Slideshow image animation (optional, for fade) */
+.gallery-item img {
+  animation: fade 1s ease-in-out;
+}
+
+@keyframes fade {
+  from {
+    opacity: 0.4;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .gallery-item img:hover {
+    transform: scale(1.05);
+    transition: transform 0.3s ease;
+  }
+}
+
+/* Responsive design improvements */
+@media (max-width: 768px) {
+  .masonry {
+    columns: 2 150px;
+    column-gap: 0.5rem;
+  }
+  
+  .modern-title {
+    font-size: 2.5rem;
+  }
+  
+  #lightboxModal .modal-content {
+    max-width: 95%;
+  }
+  
+  .nav-btn {
+    width: 40px;
+    height: 40px;
+    font-size: 1rem;
+  }
+  
+  .nav-btn.prev {
+    left: -20px;
+  }
+  
+  .nav-btn.next {
+    right: -20px;
+  }
+}
+
+@media (max-width: 480px) {
+  .masonry {
+    columns: 1 200px;
+  }
+  
+  .modern-title {
+    font-size: 2rem;
+  }
+  
+  #toggleMode {
+    width: 35px;
+    height: 35px;
+    font-size: 1rem;
+  }
+  
+  .nav-btn {
+    display: none;
+  }
+}
+
+/* Focus styles for accessibility */
+.nav-btn:focus,
+#toggleMode:focus,
+#lightboxModal .close:focus {
+  outline: 2px solid #007acc;
+  outline-offset: 2px;
+}
+
+/* Loading state */
+.gallery-item img:not(.loaded) {
+  background: linear-gradient(90deg, #f0f0f0 25%, #e0e0e0 50%, #f0f0f0 75%);
+  background-size: 200% 100%;
+  animation: loading 1.5s infinite;
+}
+
+@keyframes loading {
+  0% {
+    background-position: 200% 0;
+  }
+  100% {
+    background-position: -200% 0;
+  }
 }
 
