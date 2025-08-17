@@ -3,18 +3,29 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Anirudh's Gallery</title>
+  <meta name="description" content="Anirudh's personal photo gallery featuring a beautiful masonry layout with lightbox viewing and dark mode support.">
+  <meta name="keywords" content="photo gallery, masonry layout, lightbox, dark mode, responsive design">
+  <meta name="author" content="Anirudh">
+  <title>Anirudh's Gallery - Photo Collection</title>
   <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="style.css">
+  <link rel="icon" type="image/x-icon" href="assets/DP.jpg">
 </head>
 <body class="dark-mode">
-  <button id="toggleMode" title="Toggle Mode">🌙</button>
+  <button id="toggleMode" title="Toggle Dark/Light Mode" aria-label="Toggle between dark and light mode">🌙</button>
 
   <header>
     <h1 class="modern-title">Anirudh's Gallery</h1>
+    <p class="subtitle">A collection of memories and moments</p>
   </header>
 
-  <div id="gallery" class="masonry"></div>
+  <main>
+    <div id="gallery" class="masonry" role="main" aria-label="Photo gallery"></div>
+  </main>
+
+  <footer>
+    <p>&copy; 2024 Anirudh's Gallery. All rights reserved.</p>
+  </footer>
 
   <script src="script.js"></script>
 </body>
